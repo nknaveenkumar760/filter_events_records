@@ -1,0 +1,36 @@
+
+<html>
+<head>
+<body>
+{% load static %}
+<!-- 
+<script>
+
+var mySound = soundManager.createSound({
+
+url: '/User/naveen/filtering_project/filtering_project/media/media/332256_191210101843_9779777759-all.mp3'
+
+});
+mySound.play();
+
+</script> -->
+
+
+{% if file_name %}
+  <audio controls>
+    <!-- <source src="/Users/naveenkumar/Downloads/media/112731_191210103417_9624048848-all.mp3" type="audio/mpeg"> -->
+    <source src="/media/{{file_name}}" type="audio/mpeg">
+    
+  </audio>
+  <h5>Audio file Name --  {{file_name}}</h5>
+  {% endif %}
+
+
+  
+</body>
+</head>
+</html>
+
+
+
+

@@ -39,7 +39,9 @@ th {
 
 }
 
-
+td{
+    padding: 5px !important;
+}
 /* Shadow on the header row*/
  tr   {
       box-shadow: 0 6px 10px #b66868;
@@ -78,10 +80,13 @@ tr.odd ,td  { background-color: orange; }
         <div class="style">{{data}}</div>
         <form>
         <div class="col-xs-2">
-            <input type="text" class="form-control" name="event" id="event" placeholder="Event ID"/>
+            <input type="text" class="form-control" name="event" id="event" placeholder="Campaign ID"/>
         </div>
-        <div class="col-xs-4">
-            <input type="text" class="form-control" name="event-name" id="event-name" placeholder="Search Company Name "/>
+        <div class="col-xs-2">
+            <input type="text" class="form-control" name="event-name" id="event-name" placeholder="Campaign Name "/>
+        </div>
+        <div class="col-xs-2">
+            <input type="text" class="form-control" name="status" id="status" placeholder="Status"/>
         </div>
         <div class="col-xs-2">
             <input type="date" class="form-control" name="date-start" id="date-start"  min="31-12-2018" max="31-12--2019">
@@ -100,16 +105,49 @@ tr.odd ,td  { background-color: orange; }
   </div>
 </div><br>
 
+<div class="error"style="font-size:20px"; align="center" >
 
+</div>
 
-         <div class="error"style="font-size:20px"; align="center" >
+<div class="table">
 
-         </div>
+</div>
 
-         <div class="table">
+<!-- {% if file_name %}
+<script>
+jQuery(function(){
+    jQuery('#empModal').click();
+});
+console.log("auto execute")
+</script>
 
-         </div>
-
+{% endif %} -->
+<!-- <div class="container" > -->
+    <!-- Modal -->
+    <!-- <div class="modal fade" id="empModal" role="dialog">
+        <div class="modal-dialog">
+     -->
+        <!-- Modal content-->
+        <!-- <div class="modal-content">
+        <div class="modal-header">
+            <h4 class="modal-title">Recording</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+        <audio controls> -->
+            <!-- <source src="/Users/naveenkumar/Downloads/media/112731_191210103417_9624048848-all.mp3" type="audio/mpeg"> -->
+            <!-- <source src="/media/{{file_name}}" type="audio/mpeg">
+            
+        </audio>
+        <h5>Audio file Name --  {{file_name}}</h5>
+        
+        </div>
+        <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+        </div>
+        </div>
+    </div> -->
 
 </body>
 </html>
