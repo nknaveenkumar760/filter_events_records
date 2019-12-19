@@ -4,7 +4,7 @@ import datetime
 from django.http import JsonResponse
 from django.core import serializers
 from django.conf import settings
-
+import xlwt
 import os
 
 def index(request):
@@ -87,18 +87,12 @@ def search(request):
 
 def audio_player(request, value):
 
-    # f = open(os.path.expanduser("~/Downloads/audio_list/" + value + "-all" + ".mp3"))
     file_name = value + "-all" + ".mp3"
     # print(f)
     print(file_name)
-    # file_name = os.path.join(settings.FILES_DIR, '112731_191210103417_9624048848-all.mp3')
-    # file_name = open(os.path.join(settings.BASE_DIR, 'media/'+file_name),mode='rb')
-    # print(file_name)
 
-    # file = open("User/naveenkumar/Downloads/media/112731_191210103417_9624048848-all.mp3", "rb").read() 
-    # file['Content-Disposition'] = 'attachment; filename=filename.mp3' 
-    # return HttpResponse(file, mimetype="audio/mpeg") 
     return render(request, 'audio_page.html', {'file_name':file_name})
+    # return JsonResponse(file_name, safe=False)
 
 
 def song_download(request, value):
@@ -111,5 +105,38 @@ def song_download(request, value):
     return response
 
 
+def all_records_save_in_excel_file(request):
+    response = HttpResponse(content_type='application/ms-excel')
+    response['Content-Disposition'] = 'attachment; filename="users_records.xls"'
 
+    wb = xlwt.Workbook(encoding='utf-8')
+    ws = wb.add_sheet('Users')
 
+    # Sheet header, first row
+    row_num = 0
+
+    font_style = xlwt.XFStyle()
+    font_style.font.bold = True
+
+    columns = ['Username', 'First name', 'Last name', 'Email address', ]
+
+    for col_num in range(len(columns)):
+        ws.write(row_num, col_num, columns[col_num], font_style)
+
+    # Sheet body, remaining rows
+    font_style = xlwt.XFStyle()
+
+    # rows = request.GET.get('table_data')
+    # print("All data ---", rows)
+    # res = rows.strip('][').split("'") 
+    # print(type(res))
+    # print([res.strip() for res in res])
+    rows = ['hell','tata','tunoe','bangal']
+    for row in rows:
+        row_num += 1
+        for col_num in range(len(row)):
+            ws.write(row_num, col_num, row[col_num], font_style)
+
+    wb.save(response)
+    print('data save...')
+    return response

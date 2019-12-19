@@ -47,10 +47,10 @@ $(document).ready(function(){
         
                 
                   var trHTML = "<table>";
-                  trHTML += "<tr><th>Call Date</th>  <th>Call Time</th>  <th>Campaign ID</th> <th>Campaign Name</th>  <th> Mobile No</th>  <th>User ID</th> <th>First Name</th> <th>Company Name</th> <th>Length in Second</th>  <th>Status</th>  <th>City</th></tr>";//TABLE HEADER/HEADING----------
+                  trHTML += "<tr><th>Call Date</th>  <th>Call Time</th>  <th>Campaign ID</th> <th>Campaign Name</th>  <th> Mobile No</th>  <th>User ID</th> <th>First Name</th> <th>Company Name</th> <th>Length in Second</th>  <th>Status</th>  <th>City</th> <th>       </th> <th>     </th></tr>";//TABLE HEADER/HEADING----------
                   var newStr = trHTML.trim();
                   $.each(data, function (key,value) {
-                      
+                    // console.log(key)
                      newStr +=
                         '<tr><td>' + value.call_date +
                         '</td><td>' + value.time +
@@ -63,8 +63,8 @@ $(document).ready(function(){
                         '</td><td>' + value.length_in_sec +
                         '</td><td>' + value.status +
                         '</td><td>' + value.city+ 
-                        '</td><td>' + "<div class='col1d'><a type='button' class='btn btn-success btn-md' href='audio_player/"+value.recording_filename+"'>PlayAudio</a></div>" +
-                        '</td><td>' + "<div class='col2d'><a type='button' class='btn btn-success btn-md' href='song_download/"+value.recording_filename+"'>Download</a></div>" +
+                        '</td><td>' + "<div class='col1d'><button class='audio_play' data-toggle='modal' id='"+key+"' data-url='audio_player/"+value.recording_filename+"'><img src='/static/image/audi-icon.png' width='30px'/></button></div>" +
+                        '</td><td>' + "<div class='col2d'><a type='button'  href='song_download/"+value.recording_filename+"'><img src='/static/image/downlaod-icon.png' width='30px'/></a></div>" +
 
                         '</td></tr>';
                   });
@@ -88,12 +88,121 @@ $(document).ready(function(){
 
 });
 
+// audio paly modal 
 
-// function getbutton(recording){
-//     if(recording==null)
-//         {
-//             value.recording_url = 'No Recording available'
-//         }else{
-//             '</td><td>' + "<div class='col1d'><button type='submit' class='btn btn-primary btn-md' href='#'>Download</button></div>" 
+$(document).on('click', '.audio_play', function (e) {
+    // var theID = $(this).attr('id');
+    var url = $(this).attr('data-url');
+    console.log('id name',theID)
+    e.preventDefault();
+    console.log("its working.")
+    $.ajax({
+        type: "GET",
+        contentType: "application/json",
+        url: url,
+        data: { },
+
+        success: function(data)
+        { 
+              $('#empModal').modal('show'); 
+            $('.modal-body').html(data);
+            
+            // console.log("success audio modal...")
+        }
+       });
+   });
+
+
+// $(document).ready(function(){
+//   $("#all_records").on('click',function(e) {
+//       e.preventDefault()
+//     var table = $("table tbody");
+    
+//     var total_data = []
+    
+//     table.find('tr').each(function (i) {
+//         var array_list = []
+//         var $tds = $(this).find('td'),
+//         Call_Date = $tds.eq(0).text(),
+//         Call_Time	 = $tds.eq(1).text(),
+//         campaign_id = $tds.eq(2).text();
+//         // console.log("hello dattt", Call_Date, Call_Time, campaign_id)
+//         // do something with productId, product, Quantity
+//         array_list.push(Call_Date, Call_Time, campaign_id);
+//         console.log(array_list)
+//         total_data.push(array_list)  
+//         console.log(total_data)
+//     });
+    
+//         console.log(total_data)
+
+//         $.ajax({
+//             type: "GET",
+//             contentType: "application/json",
+//             url: '/all_records_downloads',
+//             data: { 
+//                 total_data
+//             },
+    
+//             success: function(data)
+//             { 
+//                 console.log(data)
+//             }
+//         });
+//     });
+// });
+
+// $(document).ready(function(){
+//   $("#all_records").on('click',function(e) {
+//       e.preventDefault()
+//         var TableData;
+//         TableData = storeTblValues();
+                
+//  $.ajax({
+//     type: "GET",
+//     url: '/all_records_downloads',
+//     data: {
+//      table_data:TableData 
+//     },
+//     success: function(data){
+//         console.log(data)
+//         // return value stored in msg variable
+//     }
+//     });
+// });
+
+
+// function storeTblValues()
+// {
+//     console.log("function executedd...")
+//     var TableData = new Array();
+
+//     $('.table tr').each(function(row, tr){
+//         TableData[row]={
+//             "taskNo" : $(tr).find('td:eq(0)').text()
+//             , "date" :$(tr).find('td:eq(1)').text()
+//             , "description" : $(tr).find('td:eq(2)').text()
+//             , "task" : $(tr).find('td:eq(3)').text()
 //         }
+//         // console.log(TableData[row])    
+//     }); 
+//     TableData.shift();  // first row will be empty - so remove
+//     var array_list = []
+//     array_list.push(TableData)
+//     console.log(array_list)
+//     var myJsonString = JSON.stringify(array_list);
+//     return myJsonString;
 // }
+// });
+
+$(document).ready(function(){
+    $('#all_records').on('click', function(){    
+        $(".table").table2excel({    
+            filename: "Your_File_Name.xls" ,   
+            exclude_img: true,
+            exclude_links: true,
+            exclude_inputs: true
+        });    
+        });    
+    });    
+
